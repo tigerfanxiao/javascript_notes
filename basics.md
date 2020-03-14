@@ -540,13 +540,13 @@ try {
 
 ### for of and for in 
 ```javascript
-// for of iterate a iterable array, string
+// fwork with iterable array, string
 basket = ['apple', 'orange', 'grapes']
 for (item of basket) {
     console.log(item)
 }
 
-// for in iterate an object enumerable with keys
+// work with enumerable with keys
 let obj00 = {
     'name': 'fanxiao',
     'age': 19,
@@ -555,3 +555,69 @@ for (key in obj00) {
     console.log(key)
 }
 ```
+
+# Debuging
+```javascript
+let flattened = [[0, 1], [2, 3], [4, 5]].reduce(
+    (acc, array) => {
+        debugger;
+        return acc.concat(array);
+    }, []
+);
+```
+# modules
+* inline script
+* Script tags
+* IIFE
+* browserify
+* webpack
+
+### Inline script
+inside a html body tag, the problem is 
+* the code does not have code reusability
+* the polution of global namespace
+```html
+<script type="text/javascript">
+    function () {
+        alert('a')
+    }
+</script>
+```
+### script tags
+* the order to import could be a problem
+* lack of Dependency Resolution
+* poluting the global name space
+```html
+<script type="text/javascript" src="./1.js"></script>
+<script type="text/javascript" src="./2.js"></script>
+<script type="text/javascript" src="./3.js"></script>
+<script type="text/javascript" src="./4.js"></script>
+```
+### IIFE
+immediately invoke function execution
+* reduce the global name space
+* the order of file is also important
+```javascript
+// inside js file
+let myApp = [];
+// the following function can be executed immediately but only once
+(function(){
+    myApp.add = function(a, b) {
+        return a * b
+    }
+})();
+
+```
+
+# Javascript Runtime
+Javascript is a single thread programming language, so it has only one stack and one heap
+except from Javascript engine, we have Javascript Runtime, 
+
+[demo](http://latentflip.com/loupe/?code=ZnVuY3Rpb24gcHJpbnRIZWxsbygpIHsNCiAgICBjb25zb2xlLmxvZygnSGVsbG8gZnJvbSBiYXonKTsNCn0NCg0KZnVuY3Rpb24gYmF6KCkgew0KICAgIHNldFRpbWVvdXQocHJpbnRIZWxsbywgMzAwMCk7DQp9DQoNCmZ1bmN0aW9uIGJhcigpIHsNCiAgICBiYXooKTsNCn0NCg0KZnVuY3Rpb24gZm9vKCkgew0KICAgIGJhcigpOw0KfQ0KDQpmb28oKTs%3D!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D) for runtime
+
+setTimeout(callback_function, time)
+the callback_function is be putted in callback queue. the function inside callback function will loaded in call stack. 
+
+Javascript engine will run all the lines in the Javascript file. when it found webapi, it will put it in webapi zoon and continue to put function into call stack, the event loop will keep check if the call stack is empty it means all the function is pop up from the call stack. the call stack is empty. 
+
+then it will run webapi
